@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch Movie X Series</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #456789;
+            color: #333;;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 15px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Watch Movie X Series</h1>
+    <button onclick="redirectToMovies()">Watch Movies</button>
+    <button onclick="redirectToSeries()">Watch Series</button>
+    <button onclick="redirectToSearch()">Search ID</button>
+
+    <script>
+        function redirectToMovies() {
+            window.location.href = "movies.html";
+        }
+
+        function redirectToSeries() {
+            window.location.href = "series.html";
+        }
+        function redirectToSearch() {
+            window.location.href = "search.html";
+        }
+    </script>
+</body>
+</html>

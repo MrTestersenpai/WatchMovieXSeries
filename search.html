@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OMDb Movie/TV Show Search</title>
+    <style>
+         body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #456789; /* Change to your desired background color */
+            color: #fff;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            height: 60px;
+            align-items: center;
+        }
+
+        /* Add your CSS styles here */
+        /* For example, style the input and button */
+        h1 {
+            margin: 10px;
+        }
+
+        div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        #results {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        p {
+            margin-bottom: 5px;
+        }
+        a
+        {
+            text-decoration: none;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+        <header>
+        <a href="index.html">
+        <h1>Search ID</h1>
+        </a>
+        </header>
+    <div>
+        <input type="text" id="searchInput" placeholder="Enter a movie or TV show">
+        <button onclick="searchOMDb()">Search</button>
+    </div>
+    <div id="results">
+        <!-- The search results will be displayed here -->
+    </div>
+    <script>
+        function searchOMDb() {
+            const searchQuery = document.getElementById("searchInput").value;
+            const apiKey = 'b6ca659'; // Replace with your actual OMDb API key
+
+            // Make an API request using fetch or other methods
+            fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(searchQuery)}&apikey=${apiKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the API response and display the results on the page
+                    displayResults(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+
+        function displayResults(data) {
+            const resultsContainer = document.getElementById("results");
+            resultsContainer.innerHTML = '';
+
+            // Handle the data from the API response and display links to IMDb pages
+            if (data && data.Search) {
+                data.Search.forEach(item => {
+                    const imdbLink = `https://www.imdb.com/title/${item.imdbID}/`;
+                    const ttNumber = item.imdbID; // Get the full IMDb ID (including "/tt" part)
+                    const resultElement = document.createElement('p');
+                    resultElement.innerHTML = `
+                        <a href="${imdbLink}" target="_blank">${item.Title}</a> - ${ttNumber}
+                        <button onclick="copyToClipboard('${ttNumber}')">Copy</button>
+                    `;
+                    resultsContainer.appendChild(resultElement);
+                });
+            } else {
+                resultsContainer.innerHTML = 'No results found.';
+            }
+        }
+
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            alert('Copied to clipboard!');
+        }
+    </script>
+</body>
+</html>
